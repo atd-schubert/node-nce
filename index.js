@@ -53,7 +53,7 @@ var NodeContentManagement = function NodeContent(opts){
 	  };
 	  this.uninstall = function(){
   	  if(status === "activated") this.deactivate();
-  	  if(status !== "deactivated") return false;
+  	  if(status !== "deactivated" && status !== "installed") return false;
 		  this.cms.emit("uninstallExtension", {target: this, args: arguments});
 		  this.cms.emit("uninstallExtension:"+name, {target: this, args: arguments});
 		  this.emit("uninstall", {target: this, args: arguments});

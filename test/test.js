@@ -67,17 +67,15 @@ describe('Extensions', function(){
   });
   
   describe('Connecting Extension to CMS', function(){
-    var dummyOpts = {package:{"name":"nce-events"}};
-    var dummyExt;
     
     it('should fire createExtension event', function(done){
       cms.once("createExtension", function(){
         done();
       });
-      dummyExt = cms.createExtension(dummyOpts);
+      cms.createExtension({package:{"name":"nce-create"}});
     });
     describe('#.install()', function(){
-      
+      var dummyExt = cms.createExtension({package:{"name":"nce-install"}});
       it('should fire install events', function(done){
         var events = {
           cms:false,
@@ -94,7 +92,7 @@ describe('Extensions', function(){
         cms.once("installExtension", function(){
           getEvent("cms");
         });
-        cms.once("installExtension:events", function(){
+        cms.once("installExtension:install", function(){
           getEvent("named");
         });
         dummyExt.once("install", function(){
@@ -110,9 +108,20 @@ describe('Extensions', function(){
         if(dummyExt.install() === false) return done();
         return done(new Error("Extension was installed again!"));
       });
+      it('should uninstall an installed extension', function(done){
+        var wait = function(){
+          process.nextTick(function(){
+            if(dummyExt.status !== "installed") return wait();
+            if(dummyExt.uninstall() === true) return done();
+            return done(new Error("Extension was not uninstalled!"));
+          });
+        };
+        wait();
+      });
     });
     describe('#.activate()', function(){
-      
+      var dummyExt = cms.createExtension({package:{"name":"nce-activate"}});
+      dummyExt.install();
       it('should fire activate events', function(done){
         var events = {
           cms:false,
@@ -129,7 +138,7 @@ describe('Extensions', function(){
         cms.once("activateExtension", function(){
           getEvent("cms");
         });
-        cms.once("activateExtension:events", function(){
+        cms.once("activateExtension:activate", function(){
           getEvent("named");
         });
         dummyExt.once("activate", function(){
@@ -150,8 +159,11 @@ describe('Extensions', function(){
         return done(new Error("Extension was installed again!"));
       });
     });
+    return;
     describe('#.deactivate()', function(){
-      
+      var dummyExt = cms.createExtension({package:{"name":"nce-deactivate"}});
+      dummyExt.install();
+      dummyExt.activate();
       it('should fire deactivate events', function(done){
         var events = {
           cms:false,
@@ -168,7 +180,7 @@ describe('Extensions', function(){
         cms.once("deactivateExtension", function(){
           getEvent("cms");
         });
-        cms.once("deactivateExtension:events", function(){
+        cms.once("deactivateExtension:deactivate", function(){
           getEvent("named");
         });
         dummyExt.once("deactivate", function(){
@@ -191,6 +203,10 @@ describe('Extensions', function(){
     });
     describe('#.uninstall()', function(){
       
+      var dummyExt = cms.createExtension({package:{"name":"nce-uninstall"}});
+      dummyExt.install();
+      dummyExt.activate();
+      dummyExt.deactivate();
       it('should fire uninstall events', function(done){
         var events = {
           cms:false,
@@ -207,7 +223,7 @@ describe('Extensions', function(){
         cms.once("uninstallExtension", function(){
           getEvent("cms");
         });
-        cms.once("uninstallExtension:events", function(){
+        cms.once("uninstallExtension:uninstall", function(){
           getEvent("named");
         });
         dummyExt.once("uninstall", function(){
