@@ -18,7 +18,7 @@ describe('Extensions', function(){
   describe('#createExtension #getExtension', function(){
     var dummyExt;
     
-    var dummyOpts = {package:{"version": "0.0.1", "description": "An extension for nc-cms just for testing", "main": "index.js", "author": "Arne Schubert <atd.schubert@gmail.com>", "license": "ISC", "bugs": {"url": "https://github.com/atd-schubert/node-nc/issues"},"homepage": "https://github.com/atd-schubert/node-nc"}};
+    var dummyOpts = {package:{"version": "0.0.1", "description": "An extension for nce-cms just for testing", "main": "index.js", "author": "Arne Schubert <atd.schubert@gmail.com>", "license": "ISC", "bugs": {"url": "https://github.com/atd-schubert/node-nce/issues"},"homepage": "https://github.com/atd-schubert/node-nce"}};
     
     it('should not create an extension without package information', function(done){
       try { cms.createExtension(); } catch (e){ return done();}
@@ -53,7 +53,7 @@ describe('Extensions', function(){
   });
   
   describe('configuration', function(){
-    var dummyOpts = {package:{"name":"config", "version": "0.0.1", "description": "An extension for nc-cms just for testing", "main": "index.js", "author": "Arne Schubert <atd.schubert@gmail.com>", "license": "ISC", "bugs": {"url": "https://github.com/atd-schubert/node-nc/issues"},"homepage": "https://github.com/atd-schubert/node-nc"}};
+    var dummyOpts = {package:{"name":"config", "version": "0.0.1", "description": "An extension for nc-cms just for testing", "main": "index.js", "author": "Arne Schubert <atd.schubert@gmail.com>", "license": "ISC", "bugs": {"url": "https://github.com/atd-schubert/node-nce/issues"},"homepage": "https://github.com/atd-schubert/node-nce"}};
     var dummyExt = cms.createExtension(dummyOpts);
     dummyExt.config.test = true;
     it('should get the same config in cms and extension', function(done){
