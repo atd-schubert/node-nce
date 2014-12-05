@@ -1,5 +1,5 @@
 {
-  "name": "nc",
+  "name": "nce",
   "version": "0.0.1",
   "description": "Core for an extension based content-management-system",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/atd-schubert/node-nc.git"
+    "url": "https://github.com/atd-schubert/node-nce.git"
   },
   "keywords": [
     "content-management-system",
@@ -17,7 +17,7 @@
   "author": "Arne Schubert <atd.schubert@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/atd-schubert/node-nc/issues"
+    "url": "https://github.com/atd-schubert/node-nce/issues"
   },
-  "homepage": "https://github.com/atd-schubert/node-nc"
+  "homepage": "https://github.com/atd-schubert/node-nce"
 }
