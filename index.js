@@ -29,24 +29,24 @@ var NodeContentManagement = function NodeContent(opts){
     
 	  this.activate = function(){
   	  if(status !== "installed") return false;
-		  this.cms.emit("activateExtension", {target: this, args: arguments});
-		  this.cms.emit("activateExtension:"+name, {target: this, args: arguments});
+		  this.nce.emit("activateExtension", {target: this, args: arguments});
+		  this.nce.emit("activateExtension:"+name, {target: this, args: arguments});
 		  this.emit("activate", {target: this, args: arguments});
 		  this.status = status = "activated";
 		  return true;
 	  };
 	  this.deactivate = function(){
   	  if(status !== "activated") return false;
-		  this.cms.emit("deactivateExtension", {target: this, args: arguments});
-		  this.cms.emit("deactivateExtension:"+name, {target: this, args: arguments});
+		  this.nce.emit("deactivateExtension", {target: this, args: arguments});
+		  this.nce.emit("deactivateExtension:"+name, {target: this, args: arguments});
 		  this.emit("deactivate", {target: this, args: arguments});
 		  this.status = status = "deactivated";
 		  return true;
 	  };
 	  this.install = function(){
   	  if(status === "activated" || status === "deactivated" || status === "installed") return false;
-		  this.cms.emit("installExtension", {target: this, args: arguments});
-		  this.cms.emit("installExtension:"+name, {target: this, args: arguments});
+		  this.nce.emit("installExtension", {target: this, args: arguments});
+		  this.nce.emit("installExtension:"+name, {target: this, args: arguments});
 		  this.emit("install", {target: this, args: arguments});
 		  this.status = status = "installed";
 		  return true;
@@ -54,19 +54,19 @@ var NodeContentManagement = function NodeContent(opts){
 	  this.uninstall = function(){
   	  if(status === "activated") this.deactivate();
   	  if(status !== "deactivated" && status !== "installed") return false;
-		  this.cms.emit("uninstallExtension", {target: this, args: arguments});
-		  this.cms.emit("uninstallExtension:"+name, {target: this, args: arguments});
+		  this.nce.emit("uninstallExtension", {target: this, args: arguments});
+		  this.nce.emit("uninstallExtension:"+name, {target: this, args: arguments});
 		  this.emit("uninstall", {target: this, args: arguments});
 		  this.status = status = "uninstalled";
 		  return true;
 	  };
 	  
-	  this.cms = self;
+	  this.nce = self;
 	  this.package = opts.package;
 	  this.name = name;
-	  this.config = this.cms.config[name] = this.cms.config[name] || {};
+	  this.config = this.nce.config[name] = this.nce.config[name] || {};
 	  
-	  this.cms.emit("createExtension", this);
+	  this.nce.emit("createExtension", this);
   };
   util.inherits(Extension, EventEmitter);
   Extension.extensions = {};
@@ -86,8 +86,8 @@ var NodeContentManagement = function NodeContent(opts){
   
   this.middleware = function(req, res, done){
     // cache
-    req.cms = self;
-    res.cms = self;
+    req.nce = self;
+    res.nce = self;
     
     var mwPosition = 0;
     
