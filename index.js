@@ -69,13 +69,16 @@ var NodeContentManagement = function NodeContent(opts){
 	  this.nce.emit("createExtension", this);
   };
   util.inherits(Extension, EventEmitter);
-  Extension.extensions = {};
+  this.extensions = Extension.extensions = {};
   
   this.createExtension = function(opts){
 	  return new Extension(opts);
   };
   this.getExtension = function(name){
 	  return Extension.extensions[name];
+  };
+  this.removeExtension = function(name){
+	  delete Extension.extensions[name];
   };
   
   // End of Extension class
